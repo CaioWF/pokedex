@@ -1,6 +1,6 @@
 # Pokedex
 
-Uma Pokedex digital desenvolvida com Flutter, oferecendo uma interface interativa e intuitiva para explorar informações detalhadas sobre todos os Pokémon da primeira geração.
+Uma Pokedex digital desenvolvida com Flutter, oferecendo uma interface interativa e intuitiva para explorar informações detalhadas sobre todos os Pokémon.
 
 ## Funcionalidades
 

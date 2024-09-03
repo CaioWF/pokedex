@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pokedex/theme/gradients.dart';
-import 'package:pokedex/theme/theme.dart';
+import 'package:pokedex/src/shared/theme/gradients.dart';
+import 'package:pokedex/src/shared/theme/theme.dart';
 
 void main() {
   runApp(const MyApp());

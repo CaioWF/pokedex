@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pokedex/src/shared/components/menu/menu.dart';
 import 'package:pokedex/src/shared/theme/gradients.dart';
 import 'package:pokedex/src/shared/theme/theme.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pokedex',
       theme: appTheme,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -36,39 +37,14 @@ class MyApp extends StatelessWidget {
               )
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(40.0),
               child: Column(
                 children: [
-                  Text(
-                    'Welcome to the Pokedex',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Pikachu',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Electric',
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    '#025',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Filters',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                  Menu(
+                    onGenerationSelected: () => print('Generation selected'),
+                    onOrderSelected: () => print('Order selected'),
+                    onFilterSelected: () => print('Filter selected'),
+                  )
                 ],
               ),
             ),

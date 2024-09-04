@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex/src/shared/components/menu/menu.dart';
+import 'package:pokedex/src/shared/theme/colors.dart';
 import 'package:pokedex/src/shared/theme/gradients.dart';
 
 class Home extends StatelessWidget {
@@ -29,12 +31,25 @@ class Home extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(40.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Menu(
                   onGenerationSelected: () => print('Generation selected'),
                   onOrderSelected: () => print('Order selected'),
                   onFilterSelected: () => print('Filter selected'),
-                )
+                ),
+                const SizedBox(height: 35),
+                Text(
+                  AppLocalizations.of(context)!.homeTitle,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  AppLocalizations.of(context)!.homeDescription,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.textGrey,
+                  ),
+                ),
               ],
             ),
           ),

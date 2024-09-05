@@ -1,4 +1,6 @@
 {
   "homeTitle": "Pokédex",
-  "homeDescription": "Procure Pokemons pelo nome ou usando o número da Pokédex Nacional."
+  "homeDescription": "Procure Pokemons pelo nome ou usando o número da Pokédex Nacional.",
+  "inputSearch": "Que Pokémon você está procurando?"
+
 }

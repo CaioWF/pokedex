@@ -17,6 +17,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  flutter_native_splash: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -41,3 +42,17 @@ flutter:
           weight: 500
 
   generate: true
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/pokeball.png
+  color_dark: "#121212"
+  image_dark: assets/images/pokeball.png
+
+  android_12:
+    image: assets/images/pokeball.png
+    icon_background_color: "#ffffff"
+    image_dark: assets/images/pokeball.png
+    icon_background_color_dark: "#121212"
+
+  web: false

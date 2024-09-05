@@ -41,13 +41,16 @@ class Home extends StatelessWidget {
                 const SizedBox(height: 35),
                 Text(
                   AppLocalizations.of(context)!.homeTitle,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    height: 1.19,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   AppLocalizations.of(context)!.homeDescription,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: AppColors.textGrey,
+                    height: 1.19,
                   ),
                 ),
               ],

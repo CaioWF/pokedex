@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pokedex/src/presenter/home/widgets/pokemon_list_item.dart';
 import 'package:pokedex/src/shared/components/common/search_input_custom.dart';
 import 'package:pokedex/src/shared/components/menu/menu.dart';
 import 'package:pokedex/src/shared/theme/colors.dart';
@@ -11,6 +12,21 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Pokemon> pokemons = [
+      const Pokemon(
+        number: 1,
+        name: 'Bulbasaur',
+        types: ['Grass', 'Poison'],
+        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+      ),
+      const Pokemon(
+        number: 4,
+        name: 'Charmander',
+        types: ['Fire'],
+        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
+      ),
+    ];
+    
     return Scaffold(
       body: Stack(
         children: [
@@ -24,7 +40,7 @@ class Home extends StatelessWidget {
                 },
                 blendMode: BlendMode.srcIn,
                 child: SvgPicture.asset(
-                  'assets/images/pokeball.svg',
+                  'assets/images/half-pokeball.svg',
                   semanticsLabel: 'Pokeball background',
                   width: MediaQuery.of(context).size.width,
                 ),
@@ -56,6 +72,23 @@ class Home extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 const SearchInputCustom(),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: pokemons.length,
+                    itemBuilder: (context, index) {
+                      final EdgeInsets margin = index == 0
+                        ? const EdgeInsets.only(top: 0)
+                        : const EdgeInsets.only(top: 10);
+
+                      return Container(
+                        margin: margin,
+                        child: PokemonListItem(
+                          pokemon: pokemons[index],
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

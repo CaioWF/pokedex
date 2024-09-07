@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pokedex/src/shared/components/common/badge_custom.dart';
 import 'package:pokedex/src/shared/theme/colors.dart';
 import 'package:pokedex/src/shared/theme/gradients.dart';
 
@@ -57,32 +58,13 @@ class PokemonListItem extends StatelessWidget {
                   const SizedBox(height: 3),
                   Row(
                     children: pokemon.types
-                      .map((type) => Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: AppColors.typeConfigurations[type]?['color'] ?? AppColors.typeNormal,
-                          borderRadius: BorderRadius.circular(3)
-                        ),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/${type.toLowerCase()}.svg',
-                              width: 15,
-                              height: 15,
-                              colorFilter: const ColorFilter.mode(AppColors.textWhite, BlendMode.srcIn)
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              type,
-                              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                color: AppColors.textWhite,
-                                height: 1.19,
-                              )
-                            ),
-                          ],
-                        ),
-                      ))
+                      .map((type) => BadgeCustom(
+                          assetPath: 'assets/icons/${type.toLowerCase()}.svg',
+                          text: type,
+                          backgroundColor: AppColors.typeConfigurations[type]?['color'] ?? AppColors.typeNormal,
+                          textColor: AppColors.textWhite
+                        )
+                      )
                     .toList(),
                   )
                 ],

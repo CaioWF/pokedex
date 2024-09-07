@@ -41,7 +41,7 @@ class PokemonListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '#${pokemon.number}',
+                    '#${pokemon.number.toString().padLeft(3, '0')}',
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: AppColors.textNumber,
                       height: 1.19,
@@ -91,15 +91,6 @@ class PokemonListItem extends StatelessWidget {
           )
         ),
         Positioned(
-          top: -20,
-          right: -20,
-          child: Image.network(
-            pokemon.imageUrl,
-            width: 80,
-            height: 80,
-          )
-        ),
-        Positioned(
           top: 30,
           left: 90,
           child: ShaderMask(
@@ -125,6 +116,14 @@ class PokemonListItem extends StatelessWidget {
               'assets/images/pokeball.svg',
               width: 145,
             ),
+          )
+        ),
+        Positioned(
+          right: 10,
+          child: Image.network(
+            pokemon.imageUrl,
+            width: 130,
+            height: 130,
           )
         ),
       ],

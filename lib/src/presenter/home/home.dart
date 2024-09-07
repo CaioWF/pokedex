@@ -17,13 +17,13 @@ class Home extends StatelessWidget {
         number: 1,
         name: 'Bulbasaur',
         types: ['Grass', 'Poison'],
-        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
       ),
       const Pokemon(
         number: 4,
         name: 'Charmander',
         types: ['Fire'],
-        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
+        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
       ),
     ];
     

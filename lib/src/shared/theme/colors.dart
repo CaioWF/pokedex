@@ -62,4 +62,79 @@ class AppColors {
   static const Color weightLight = Color(0xFF99CD7C);
   static const Color weightNormal = Color(0xFF57B2DC);
   static const Color weightHeavy = Color(0xFF5A92A5);
+
+  static const Map<String, Map<String, dynamic>> typeConfigurations = {
+    'Grass': {
+      'color': typeGrass,
+      'backgroundColor': backgroundTypeGrass
+    },
+    'Poison': {
+      'color': typePoison,
+      'backgroundColor': backgroundTypePoison,
+    },
+    'Fire': {
+      'color': typeFire,
+      'backgroundColor': backgroundTypeFire,
+    },
+    'Water': {
+      'color': typeWater,
+      'backgroundColor': backgroundTypeWater,
+    },
+    'Bug': {
+      'color': typeBug,
+      'backgroundColor': backgroundTypeBug,
+    },
+    'Normal': {
+      'color': typeNormal,
+      'backgroundColor': backgroundTypeNormal,
+    },
+    'Electric': {
+      'color': typeElectric,
+      'backgroundColor': backgroundTypeElectric,
+    },
+    'Ground': {
+      'color': typeGround,
+      'backgroundColor': backgroundTypeGround,
+    },
+    'Fairy': {
+      'color': typeFairy,
+      'backgroundColor': backgroundTypeFairy,
+    },
+    'Fighting': {
+      'color': typeFighting,
+      'backgroundColor': backgroundTypeFighting,
+    },
+    'Psychic': {
+      'color': typePsychic,
+      'backgroundColor': backgroundTypePsychic,
+    },
+    'Rock': {
+      'color': typeRock,
+      'backgroundColor': backgroundTypeRock,
+    },
+    'Steel': {
+      'color': typeSteel,
+      'backgroundColor': backgroundTypeSteel,
+    },
+    'Ice': {
+      'color': typeIce,
+      'backgroundColor': backgroundTypeIce,
+    },
+    'Ghost': {
+      'color': typeGhost,
+      'backgroundColor': backgroundTypeGhost,
+    },
+    'Dragon': {
+      'color': typeDragon,
+      'backgroundColor': backgroundTypeDragon,
+    },
+    'Dark': {
+      'color': typeDark,
+      'backgroundColor': backgroundTypeDark,
+    },
+    'Flying': {
+      'color': typeFlying,
+      'backgroundColor': backgroundTypeFlying,
+    },
+  };
 }

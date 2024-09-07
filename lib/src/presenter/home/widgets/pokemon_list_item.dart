@@ -21,19 +21,6 @@ class PokemonListItem extends StatelessWidget {
 
   const PokemonListItem({super.key, required this.pokemon});
 
-  Widget _getTypeIcon(String type) {
-    switch (type) {
-      case 'Grass':
-        return Icon(Icons.grass, color: AppColors.textWhite, size: 15);
-      case 'Fire':
-        return Icon(Icons.local_fire_department, color: AppColors.textWhite, size: 15);
-      case 'Poison':
-        return Icon(Icons.bubble_chart, color: AppColors.textWhite, size: 15);
-      default:
-        return Icon(Icons.help_outline, color: AppColors.textWhite, size: 15);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -44,7 +31,7 @@ class PokemonListItem extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           height: 115,
           decoration: BoxDecoration(
-            color: AppColors.backgroundTypeGrass,
+            color: AppColors.typeConfigurations[pokemon.types[0]]?['backgroundColor'] ?? AppColors.typeNormal,
             borderRadius: BorderRadius.circular(10)
           ),
           child: Row(
@@ -74,12 +61,17 @@ class PokemonListItem extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 5),
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          color: AppColors.typeGrass,
+                          color: AppColors.typeConfigurations[type]?['color'] ?? AppColors.typeNormal,
                           borderRadius: BorderRadius.circular(3)
                         ),
                         child: Row(
                           children: [
-                            _getTypeIcon(type),
+                            SvgPicture.asset(
+                              'assets/icons/${type.toLowerCase()}.svg',
+                              width: 15,
+                              height: 15,
+                              colorFilter: const ColorFilter.mode(AppColors.textWhite, BlendMode.srcIn)
+                            ),
                             const SizedBox(width: 5),
                             Text(
                               type,

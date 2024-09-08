@@ -20,7 +20,7 @@ abstract class BaseRepository {
     } else if (e is CacheException) {
       return const CacheFailure('Failed to access cache');
     } else {
-      return const ServerFailure('Unexpected error occurred');
+      return const UnexpectedFailure('Unexpected error occurred');
     }
   }
 }

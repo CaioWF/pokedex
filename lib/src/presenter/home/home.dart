@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pokedex/src/presenter/home/home_controller.dart';
 import 'package:pokedex/src/presenter/home/widgets/pokemon_list_item.dart';
 import 'package:pokedex/src/shared/components/common/search_input_custom.dart';
 import 'package:pokedex/src/shared/components/menu/menu.dart';
 import 'package:pokedex/src/shared/theme/colors.dart';
 import 'package:pokedex/src/shared/theme/gradients.dart';
+import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomeController>(context, listen: false).fetchPokemonList();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final List<Pokemon> pokemons = [
-      const Pokemon(
-        number: 1,
-        name: 'Bulbasaur',
-        types: ['Grass', 'Poison'],
-        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
-      ),
-      const Pokemon(
-        number: 4,
-        name: 'Charmander',
-        types: ['Fire'],
-        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
-      ),
-    ];
+    final controller = Provider.of<HomeController>(context);
     
     return Scaffold(
       body: Stack(
@@ -72,23 +76,29 @@ class Home extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 const SearchInputCustom(),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: pokemons.length,
-                    itemBuilder: (context, index) {
-                      final EdgeInsets margin = index == 0
-                        ? const EdgeInsets.only(top: 0)
-                        : const EdgeInsets.only(top: 10);
+                controller.isLoading ?
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ) : controller.errorMessage != null ?
+                    Center(
+                      child: Text(controller.errorMessage!),
+                    ) :
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: controller.pokemons.length,
+                        itemBuilder: (context, index) {
+                          final EdgeInsets margin = index == 0
+                            ? const EdgeInsets.only(top: 0)
+                            : const EdgeInsets.only(top: 10);
+                          final pokemon = controller.pokemons[index];
 
-                      return Container(
-                        margin: margin,
-                        child: PokemonListItem(
-                          pokemon: pokemons[index],
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                          return Container(
+                            margin: margin,
+                            child: PokemonListItem(pokemon: pokemon),
+                          );
+                        },
+                      ),
+                    ),
               ],
             ),
           ),

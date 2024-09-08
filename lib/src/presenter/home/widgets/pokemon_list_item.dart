@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pokedex/src/domain/entities/pokemon_list_entity.dart';
 import 'package:pokedex/src/shared/components/common/badge_custom.dart';
 import 'package:pokedex/src/shared/theme/colors.dart';
 import 'package:pokedex/src/shared/theme/gradients.dart';
 
-class Pokemon {
-  final int number;
-  final String name;
-  final String imageUrl;
-  final List<String> types;
 
-  const Pokemon({
-    required this.number,
-    required this.name,
-    required this.imageUrl,
-    required this.types,
-  });
-}
 class PokemonListItem extends StatelessWidget {
-  final Pokemon pokemon;
+  final PokemonListEntity pokemon;
 
   const PokemonListItem({super.key, required this.pokemon});
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/src/core/config/app_config.dart';
+import 'package:pokedex/src/core/network/dio_setup.dart';
 import 'package:pokedex/src/domain/usecases/fetch_pokemon_list_usecase.dart';
 import 'package:pokedex/src/presenter/home/home_controller.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +10,11 @@ import 'package:pokedex/src/presenter/home/home.dart';
 import 'package:pokedex/src/shared/theme/theme.dart';
 
 void main() {
+  // setup
+  final dio = setupDio();
+  
   //repositories
-  final pokemonRepository = PokemonRepositoryImpl(apiBaseUrl: AppConfig.apiBaseUrl);
+  final pokemonRepository = PokemonRepositoryImpl(apiBaseUrl: AppConfig.apiBaseUrl, dio: dio);
   
   //usecases
   final fetchPokemonListUsecase = FetchPokemonListUsecase(pokemonRepository);

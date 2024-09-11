@@ -21,7 +21,7 @@ class HomeController extends ChangeNotifier {
     _errorMessage = null;
     notifyListeners();
 
-    final result = await _fetchPokemonListUseCase(10, 0);
+    final result = await _fetchPokemonListUseCase(10000, 0);
 
     result.fold(
       (error) {
@@ -30,7 +30,7 @@ class HomeController extends ChangeNotifier {
         _isLoading = false;
       },
       (pokemons) {
-        _pokemons = pokemons.toList();
+        _pokemons = (pokemons ?? []).toList();
         _isLoading = false;
       },
     );

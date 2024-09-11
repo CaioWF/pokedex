@@ -1,6 +1,5 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:pokedex/src/core/errors/failure.dart';
 import 'package:pokedex/src/core/repositories/base_repository.dart';
 import 'package:pokedex/src/data/mappers/pokemon_list_mapper.dart';
@@ -10,19 +9,29 @@ import 'package:pokedex/src/domain/repositories/pokemon_repository.dart';
 
 class PokemonRepositoryImpl extends BaseRepository implements PokemonRepository  {
   final String apiBaseUrl;
+  final Dio dio;
+  CancelToken? cancelToken;
 
-  PokemonRepositoryImpl({required this.apiBaseUrl});
+  PokemonRepositoryImpl({required this.apiBaseUrl, required this.dio});
 
   @override
-  Future<Either<Failure, List<PokemonListEntity>>> fetchPokemonList(int limit, int offset) async {
+  Future<Either<Failure, List<PokemonListEntity>?>> fetchPokemonList(int limit, int offset) async {
+    if (cancelToken != null && !cancelToken!.isCancelled) {
+      cancelToken!.cancel('New request dispatched. All previous requests are cancelled.');
+    }
+
+    cancelToken = CancelToken();
+
     return safeFetch(() async {
-      final response = await http.get(Uri.parse('$apiBaseUrl/pokemon?limit=$limit&offset=$offset'));
+      final response = await dio.get(
+        '$apiBaseUrl/pokemon?limit=$limit&offset=$offset',
+        cancelToken: cancelToken,
+      );
 
       if (response.statusCode == 200) {
-        final json = jsonDecode(response.body);
-        final results = json['results'] as List;
+        final data = response.data;
 
-        return results.map((result) {
+        return (data['results'] as List<dynamic>).map((result) {
           return PokemonListMapper.fromEntity(
             PokemonListModel(
               id: extractIdFromUrl(result['url']),

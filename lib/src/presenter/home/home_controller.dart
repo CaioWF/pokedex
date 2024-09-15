@@ -16,12 +16,12 @@ class HomeController extends ChangeNotifier {
   List<PokemonListEntity> get pokemons => _pokemons;
   String? get errorMessage => _errorMessage;
 
-  Future<void> fetchPokemonList() async {
+  Future<void> fetchPokemonList(dynamic selectedGeneration) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
-    final result = await _fetchPokemonListUseCase(10000, 0);
+    final result = await _fetchPokemonListUseCase(selectedGeneration);
 
     result.fold(
       (error) {

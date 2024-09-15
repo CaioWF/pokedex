@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pokedex/src/core/config/pokemon_generation_config.dart';
 import 'package:pokedex/src/presenter/home/home_controller.dart';
 import 'package:pokedex/src/presenter/home/widgets/pokemon_list_item.dart';
+import 'package:pokedex/src/shared/components/common/bottom_sheet_custom.dart';
 import 'package:pokedex/src/shared/components/common/search_input_custom.dart';
 import 'package:pokedex/src/shared/components/menu/menu.dart';
 import 'package:pokedex/src/shared/theme/colors.dart';
@@ -17,20 +19,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String selectedGeneration = 'firstGeneration';
+
+  final List<String> generations = PokemonGenerations.generations.keys.toList();
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<HomeController>(context, listen: false).fetchPokemonList();
+      Provider.of<HomeController>(context, listen: false).fetchPokemonList(
+        PokemonGenerations.generations[generations.first]
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<HomeController>(context);
-    
+
     return Scaffold(
       body: Stack(
         children: [
@@ -55,7 +62,7 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Menu(
-                  onGenerationSelected: () => print('Generation selected'),
+                  onGenerationSelected: () => _showGenerationPicker(context),
                   onOrderSelected: () => print('Order selected'),
                   onFilterSelected: () => print('Filter selected'),
                 ),
@@ -105,5 +112,31 @@ class _HomeState extends State<Home> {
         ],
       )
     );
+  }
+
+  void _showGenerationPicker(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,  // Necessário para permitir rolagem completa
+      builder: (BuildContext context) {
+        return DraggableBottomSheet(
+          title: 'Escolha uma Geração',
+          items: generations,
+          selectedItem: selectedGeneration,
+          onItemSelected: (generation) {
+            setState(() {
+              selectedGeneration = generation;
+              _fetchPokemonOnSelectedGeneration(selectedGeneration);
+            });
+          },
+          maxChildSize: 0.85,
+        );
+      },
+    );
+  }
+
+  void _fetchPokemonOnSelectedGeneration(String generation) {
+    final homeController = Provider.of<HomeController>(context, listen: false);
+    homeController.fetchPokemonList(PokemonGenerations.generations[generation]);
   }
 }

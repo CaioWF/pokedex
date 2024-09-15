@@ -15,7 +15,7 @@ class PokemonRepositoryImpl extends BaseRepository implements PokemonRepository 
   PokemonRepositoryImpl({required this.apiBaseUrl, required this.dio});
 
   @override
-  Future<Either<Failure, List<PokemonListEntity>?>> fetchPokemonList(int limit, int offset) async {
+  Future<Either<Failure, List<PokemonListEntity>?>> fetchPokemonList(int limit, int offset, dynamic generation) async {
     if (cancelToken != null && !cancelToken!.isCancelled) {
       cancelToken!.cancel('New request dispatched. All previous requests are cancelled.');
     }
@@ -37,7 +37,8 @@ class PokemonRepositoryImpl extends BaseRepository implements PokemonRepository 
               id: extractIdFromUrl(result['url']),
               name: result['name'],
               url: result['url'],
-            )
+            ),
+            generation
           );
         }).toList();
       } else {

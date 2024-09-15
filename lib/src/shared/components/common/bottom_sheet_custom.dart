@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/src/shared/theme/colors.dart';
 
 class DraggableBottomSheet extends StatelessWidget {
   final List<String> items;
@@ -25,19 +26,17 @@ class DraggableBottomSheet extends StatelessWidget {
       maxChildSize: maxChildSize,
       builder: (BuildContext context, ScrollController scrollController) {
         return Stack(
-          clipBehavior: Clip.none, // Permite que a barra fique fora da área visível
+          clipBehavior: Clip.none,
           children: [
-            // Conteúdo principal do BottomSheet
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(40),
               decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                color: AppColors.backgroundWhite,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 16), // Espaço para o handle fora do BottomSheet
                   Text(
                     title,
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -55,8 +54,8 @@ class DraggableBottomSheet extends StatelessWidget {
                               ? const Icon(Icons.check, color: Colors.green)
                               : null,
                           onTap: () {
-                            onItemSelected(item); // Chama o callback ao selecionar o item
-                            Navigator.pop(context); // Fecha o BottomSheet
+                            onItemSelected(item);
+                            Navigator.pop(context);
                           },
                         );
                       },
@@ -65,22 +64,21 @@ class DraggableBottomSheet extends StatelessWidget {
                 ],
               ),
             ),
-            // Barra de arrasto posicionada fora do BottomSheet
             Positioned(
-              top: -20, // Posiciona a barra para fora do BottomSheet
+              top: -12,
               left: 0,
               right: 0,
               child: Center(
                 child: GestureDetector(
                   onVerticalDragUpdate: (details) {
-                    Navigator.of(context).pop(); // Para capturar o arrasto direto
+                    Navigator.of(context).pop();
                   },
                   child: Container(
-                    width: 40,
-                    height: 5,
+                    width: 80,
+                    height: 6,
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.backgroundWhite,
+                      borderRadius: BorderRadius.circular(3),
                     ),
                   ),
                 ),

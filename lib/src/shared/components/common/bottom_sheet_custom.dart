@@ -5,6 +5,7 @@ class DraggableBottomSheet extends StatelessWidget {
   final String selectedItem;
   final void Function(String) onItemSelected;
   final String title;
+  final double maxChildSize;
 
   const DraggableBottomSheet({
     super.key,
@@ -12,15 +13,16 @@ class DraggableBottomSheet extends StatelessWidget {
     required this.selectedItem,
     required this.onItemSelected,
     required this.title,
+    required this.maxChildSize,
   });
 
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
       expand: false,
-      initialChildSize: 0.5,
+      initialChildSize: 0.48,
       minChildSize: 0.2,
-      maxChildSize: 0.85,
+      maxChildSize: maxChildSize,
       builder: (BuildContext context, ScrollController scrollController) {
         return Stack(
           clipBehavior: Clip.none, // Permite que a barra fique fora da área visível

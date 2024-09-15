@@ -8,7 +8,10 @@ class FetchPokemonListUsecase {
 
   FetchPokemonListUsecase(this.repository);
 
-  Future<Either<Failure, List<PokemonListEntity>?>> call(int limit, int offset) async {
-    return await repository.fetchPokemonList(limit, offset);
+  Future<Either<Failure, List<PokemonListEntity>?>> call(dynamic selectedGeneration) async {
+    final limit = selectedGeneration['pagination']['limit'];
+    final offset = selectedGeneration['pagination']['offset'];
+    
+    return repository.fetchPokemonList(limit, offset, selectedGeneration);
   }
 }

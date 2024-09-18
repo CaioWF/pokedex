@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/src/shared/theme/colors.dart';
 
 class DraggableBottomSheet extends StatelessWidget {
-  final List<String> items;
-  final String selectedItem;
-  final void Function(String) onItemSelected;
+  final Widget content;
   final String title;
   final double maxChildSize;
 
   const DraggableBottomSheet({
     super.key,
-    required this.items,
-    required this.selectedItem,
-    required this.onItemSelected,
+    required this.content,
     required this.title,
     required this.maxChildSize,
   });
@@ -43,23 +39,7 @@ class DraggableBottomSheet extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Expanded(
-                    child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        return ListTile(
-                          title: Text(item),
-                          trailing: selectedItem == item
-                              ? const Icon(Icons.check, color: Colors.green)
-                              : null,
-                          onTap: () {
-                            onItemSelected(item);
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                    ),
+                    child: content,
                   ),
                 ],
               ),

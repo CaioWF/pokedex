@@ -117,23 +117,119 @@ class _HomeState extends State<Home> {
   void _showGenerationPicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true,  // Necessário para permitir rolagem completa
+      isScrollControlled: true,
       builder: (BuildContext context) {
         return DraggableBottomSheet(
           title: 'Escolha uma Geração',
-          items: generations,
-          selectedItem: selectedGeneration,
-          onItemSelected: (generation) {
-            setState(() {
-              selectedGeneration = generation;
-              _fetchPokemonOnSelectedGeneration(selectedGeneration);
-            });
-          },
+          content: _buildGridView(),
           maxChildSize: 0.85,
         );
       },
     );
   }
+
+  Widget _buildGridView() {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 160 / 129,
+      ),
+      itemCount: 9,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            print('Imagem ${index + 1} selecionada');
+            Navigator.pop(context); // Fecha o BottomSheet ao selecionar
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.backgroundDefaultInput,
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 10,
+                  left: 15,
+                  width: 80,
+                  height: 35,
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return AppGradients.vectorGreyGradient.createShader(bounds);
+                    },
+                    blendMode: BlendMode.srcIn,
+                    child: SvgPicture.asset(
+                      'assets/images/dot-pattern-6x3.svg',
+                    ),
+                  )
+                ),
+                Positioned(
+                  top: 70,
+                  left: 60,
+                  width: 140,
+                  height: 140,
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return AppGradients.pokeballGreyGradient.createShader(bounds);
+                    },
+                    blendMode: BlendMode.srcIn,
+                    child: SvgPicture.asset(
+                      'assets/images/pokeball.svg',
+                    ),
+                  )
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/images/generation-1.png',
+                        width: 148,
+                        height: 64,
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Generation 1',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppColors.textGrey,
+                          height: 1.19,
+                        ),
+                      ),
+                    ],
+                  )
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildListView() {
+    return ListView.builder(
+      itemCount: generations.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          // leading: imageItems[index],
+          title: Text(generations[index]),
+          onTap: () {
+            (generation) {
+              setState(() {
+                selectedGeneration = generation;
+                _fetchPokemonOnSelectedGeneration(selectedGeneration);
+              });
+            };
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+  }
+
 
   void _fetchPokemonOnSelectedGeneration(String generation) {
     final homeController = Provider.of<HomeController>(context, listen: false);

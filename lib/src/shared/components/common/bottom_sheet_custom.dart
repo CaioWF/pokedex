@@ -4,12 +4,14 @@ import 'package:pokedex/src/shared/theme/colors.dart';
 class DraggableBottomSheet extends StatelessWidget {
   final Widget content;
   final String title;
+  final String description;
   final double maxChildSize;
 
   const DraggableBottomSheet({
     super.key,
     required this.content,
     required this.title,
+    required this.description,
     required this.maxChildSize,
   });
 
@@ -25,7 +27,7 @@ class DraggableBottomSheet extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Container(
-              padding: const EdgeInsets.all(40),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               decoration: const BoxDecoration(
                 color: AppColors.backgroundWhite,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
@@ -35,9 +37,20 @@ class DraggableBottomSheet extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: AppColors.textBlack,
+                      height: 1.19,
+                    ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 5),
+                  Text(
+                    description,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppColors.textGrey,
+                      height: 1.19,
+                    ),
+                  ),
+                  const SizedBox(height: 35),
                   Expanded(
                     child: content,
                   ),

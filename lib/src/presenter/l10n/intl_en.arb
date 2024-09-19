@@ -1,5 +1,16 @@
 {
   "homeTitle": "Pokédex",
   "homeDescription": "Search for Pokémon by name or using the National Pokédex number.",
-  "inputSearch": "What Pokémon are you looking for?"
+  "inputSearch": "What Pokémon are you looking for?",
+  "generationFilterTitle": "Generations",
+  "generationFilterDescription": "Use search for generations to explore Pokémon from different regions.",
+  "generation": "{generation, select, firstGeneration{Generation I} secondGeneration{Generation II} thirdGeneration{Generation III} fourthGeneration{Generation IV} fifthGeneration{Generation V} sixthGeneration{Generation VI} seventhGeneration{Generation VII} eighthGeneration{Generation VIII} other {Generation IX}}",
+  "@generation": {
+    "description": "A Pokémon geration",
+    "placeholders": {
+      "generation": {
+        "type": "String"
+      }
+    }
+  }
 }

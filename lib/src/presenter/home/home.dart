@@ -123,24 +123,45 @@ class _HomeState extends State<Home> {
         return DraggableBottomSheet(
           title: AppLocalizations.of(context)!.generationFilterTitle,
           description: AppLocalizations.of(context)!.generationFilterDescription,
-          content: GenerationGrid(
-            selectedGeneration: selectedGeneration,
-            onItemSelected: (generation) {
-              setState(() {
-                selectedGeneration = generation;
-                _fetchPokemonOnSelectedGeneration(selectedGeneration);
-              });
-            },
-            generations: generations,
-          ),
+          content: (scrollController) {
+            return GenerationGrid(
+              selectedGeneration: selectedGeneration,
+              onItemSelected: (generation) {
+                setState(() {
+                  selectedGeneration = generation;
+                  _fetchPokemonOnSelectedGeneration(selectedGeneration);
+                });
+              },
+              generations: generations,
+              scrollController: scrollController,
+            );
+          },
+          maxChildSize: 0.65,
+        );
+      },
+    );
+  }
+
+  void _showSortSelector(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return DraggableBottomSheet(
+          title: AppLocalizations.of(context)!.generationFilterTitle,
+          description: AppLocalizations.of(context)!.generationFilterDescription,
+          content: (scrollController) {
+            return _buildListView(scrollController);
+          },
           maxChildSize: 0.85,
         );
       },
     );
   }
 
-  Widget _buildListView() {
+  Widget _buildListView(ScrollController scrollController) {
     return ListView.builder(
+      controller: scrollController,
       itemCount: generations.length,
       itemBuilder: (context, index) {
         return ListTile(

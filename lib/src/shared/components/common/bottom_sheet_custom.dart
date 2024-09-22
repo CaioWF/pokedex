@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/src/shared/theme/colors.dart';
 
 class DraggableBottomSheet extends StatelessWidget {
-  final Widget content;
+  final Widget Function(ScrollController scrollController) content;
   final String title;
   final String description;
   final double maxChildSize;
@@ -52,7 +52,7 @@ class DraggableBottomSheet extends StatelessWidget {
                   ),
                   const SizedBox(height: 35),
                   Expanded(
-                    child: content,
+                    child: content(scrollController),
                   ),
                 ],
               ),

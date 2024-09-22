@@ -8,12 +8,14 @@ class GenerationGrid extends StatefulWidget {
   final String selectedGeneration;
   final Function(String) onItemSelected;
   final List<String> generations;
+  final ScrollController scrollController;
 
   const GenerationGrid({
     super.key,
     required this.selectedGeneration,
     required this.onItemSelected,
     required this.generations,
+    required this.scrollController,
   });
 
   @override
@@ -24,13 +26,14 @@ class _GenerationGridState extends State<GenerationGrid> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      controller: widget.scrollController,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         childAspectRatio: 160 / 129,
       ),
-      itemCount: 9,
+      itemCount: widget.generations.length,
       itemBuilder: (context, index) {
         final generation = widget.generations[index];
         bool isSelected = generation == widget.selectedGeneration;

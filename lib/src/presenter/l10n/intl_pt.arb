@@ -3,7 +3,7 @@
   "homeDescription": "Procure Pokemons pelo nome ou usando o número da Pokédex Nacional.",
   "inputSearch": "Que Pokémon você está procurando?",
   "generationFilterTitle": "Gerações",
-  "generationFilterDescription": "Use a pesquisa por gerações para explorar Pokémons de diferentes regiões.",
+  "generationFilterDescription": "Use a pesquisa por gerações para explorar Pokémons de diferentes regiões!",
   "generation": "{generation, select, firstGeneration{Geração I} secondGeneration{Geração II} thirdGeneration{Geração III} fourthGeneration{Geração IV} fifthGeneration{Geração V} sixthGeneration{Geração VI} seventhGeneration{Geração VII} eighthGeneration{Geração VIII} other {Geração IX}}",
   "@generation": {
     "description": "A Pokémon geration",
@@ -12,5 +12,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "orderFilterTitle": "Ordenar",
+  "orderFilterDescription": "Ordene os Pokémons em ordem alfabética ou pelo número da Pokédex Nacional!",
+  "order": "{order, select, number_asc{Números menores primeiro} number_desc{Números maiores primeiro} name_asc{A-Z} other {Z-A}}"
 }

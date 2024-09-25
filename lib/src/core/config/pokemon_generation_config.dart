@@ -4,6 +4,7 @@ class PokemonGenerations {
       'pagination': {
         'offset': 0,
         'limit': 151,
+        'lastIndex': 151
       },
       'pokemonTypes': {
         'bulbasaur': ['Grass', 'Poison'],
@@ -162,7 +163,8 @@ class PokemonGenerations {
     'secondGeneration': {
       'pagination': {
         'offset': 151,
-        'limit': 251,
+        'limit': 100,
+        'lastIndex': 251
       },
       'pokemonTypes': {
         'chikorita': ['Grass'],
@@ -270,7 +272,8 @@ class PokemonGenerations {
     'thirdGeneration': {
       'pagination': {
         'offset': 251,
-        'limit': 386,
+        'limit': 135,
+        'lastIndex': 386
       },
       'pokemonTypes': {
         'treecko': ['Grass'],
@@ -407,13 +410,14 @@ class PokemonGenerations {
         'groudon': ['Ground'],
         'rayquaza': ['Dragon', 'Flying'],
         'jirachi': ['Steel', 'Psychic'],
-        'deoxys': ['Psychic'],
+        'deoxys-normal': ['Psychic'],
       }
     },
     'fourthGeneration': {
       'pagination': {
         'offset': 386,
-        'limit': 493,
+        'limit': 107,
+        'lastIndex': 493
       },
       'pokemonTypes': {
         'turtwig': ['Grass'],
@@ -529,7 +533,8 @@ class PokemonGenerations {
     'fifthGeneration': {
       'pagination': {
         'offset': 493,
-        'limit': 649,
+        'limit': 156,
+        'lastIndex': 649
       },
       'pokemonTypes': {
         'snivy': ['Grass'],
@@ -692,7 +697,8 @@ class PokemonGenerations {
     'sixthGeneration': {
       'pagination': {
         'offset': 649,
-        'limit': 721,
+        'limit': 72,
+        'lastIndex': 721
       },
       'pokemonTypes': {
         'chespin': ['Grass'],
@@ -772,7 +778,8 @@ class PokemonGenerations {
     'seventhGeneration': {
       'pagination': {
         'offset': 721,
-        'limit': 809,
+        'limit': 88,
+        'lastIndex': 809
       },
       'pokemonTypes': {
         'rowlet': ['Grass', 'Flying'],
@@ -868,7 +875,8 @@ class PokemonGenerations {
     'eighthGeneration': {
       'pagination': {
         'offset': 809,
-        'limit': 905,
+        'limit': 96,
+        'lastIndex': 905
       },
       'pokemonTypes': {
         'grookey': ['Grass'],
@@ -972,7 +980,8 @@ class PokemonGenerations {
     // 'ninthGeneration': {
     //   'pagination': {
     //     'offset': 905,
-    //     'limit': 1010,
+    //     'limit': 105,
+    //     'lastIndex': 1010
     //   },
     //   'pokemonTypes': {
     //     'sprigatito': ['Grass'],

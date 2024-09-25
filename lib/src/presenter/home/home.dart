@@ -172,9 +172,10 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _fetchPokemonOnSelectedGeneration() {
+  void _fetchPokemonOnSelectedGeneration() async {
     final homeController = Provider.of<HomeController>(context, listen: false);
-    homeController.fetchPokemonList(PokemonGenerations.generations[selectedGeneration]);
+    await homeController.fetchPokemonList(PokemonGenerations.generations[selectedGeneration]);
+    homeController.sortPokemons(selectedOrder);
   }
 
   void _filterPokemonOnOrderChange(HomeController controller) {

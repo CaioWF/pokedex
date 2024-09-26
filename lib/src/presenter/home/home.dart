@@ -88,9 +88,16 @@ class _HomeState extends State<Home> {
                 const SizedBox(height: 25),
                 const SearchInputCustom(),
                 controller.isLoading ?
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  ) : controller.errorMessage != null ?
+                  Expanded(
+                    child: Center(
+                      child: Image.asset(
+                        'assets/animations/search-animation.gif',
+                        width: 128,
+                        height: 128,
+                      ),
+                    ),
+                  )
+                  : controller.errorMessage != null ?
                     Center(
                       child: Text(controller.errorMessage!),
                     ) :

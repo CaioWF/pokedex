@@ -36,6 +36,7 @@ flutter:
     - assets/images/
     - assets/images/generations/
     - assets/icons/
+    - assets/animations/
 
   fonts:
     - family: SFProDisplay

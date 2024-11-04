@@ -86,7 +86,15 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 const SizedBox(height: 25),
-                const SearchInputCustom(),
+                SearchInputCustom(
+                  onSearch: _onSearch,
+                  onLoadingStart: () {
+                    controller.setLoading(true);
+                  },
+                  onLoadingEnd: () {
+                    controller.setLoading(false);
+                  },
+                ),
                 controller.isLoading ?
                   Expanded(
                     child: Center(
@@ -187,5 +195,10 @@ class _HomeState extends State<Home> {
 
   void _filterPokemonOnOrderChange(HomeController controller) {
     controller.sortPokemons(selectedOrder);
+  }
+
+  void _onSearch(String query) {
+    final homeController = Provider.of<HomeController>(context, listen: false);
+    homeController.searchPokemon(query);
   }
 }

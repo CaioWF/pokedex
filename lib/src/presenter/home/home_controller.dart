@@ -11,14 +11,23 @@ class HomeController extends ChangeNotifier {
 
   bool _isLoading = false;
   List<PokemonListEntity> _pokemons = [];
+  List<PokemonListEntity> _originalPokemons = [];
   String? _errorMessage;
+
+  String _searchQuery = '';
+  OrderOption? _currentOrderOption;
 
   bool get isLoading => _isLoading;
   List<PokemonListEntity> get pokemons => _pokemons;
   String? get errorMessage => _errorMessage;
 
+  void setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   Future<void> fetchPokemonList(dynamic selectedGeneration) async {
-    _isLoading = true;
+    setLoading(true);
     _errorMessage = null;
     notifyListeners();
 
@@ -28,14 +37,16 @@ class HomeController extends ChangeNotifier {
       (error) {
         _errorMessage = _getMessageFromFailure(error);
         _pokemons = [];
-        _isLoading = false;
+        _originalPokemons = [];
+        setLoading(false);
       },
       (pokemons) {
-        _pokemons = (pokemons ?? []).toList();
-        _isLoading = false;
+        _originalPokemons = (pokemons ?? []).toList();
+        _applyFilters();
+        setLoading(false);
       },
     );
-    _isLoading = false;
+    setLoading(false);
     notifyListeners();
   }
 
@@ -51,14 +62,34 @@ class HomeController extends ChangeNotifier {
   }
 
   void sortPokemons(OrderOption orderOption) {
-    final isAscending = orderOption.order == 'asc';
-    
-    if (orderOption.orderBy == 'number') {
-      _pokemons.sort((a, b) => _compare(a.number, b.number, isAscending));
-    } else {
-      _pokemons.sort((a, b) => _compare(a.name, b.name, isAscending));
+    _currentOrderOption = orderOption;
+    _applyFilters();
+  }
+
+  void searchPokemon(String query) {
+    _searchQuery = query;
+    _applyFilters();
+  }
+
+  void _applyFilters() {
+    List<PokemonListEntity> filteredPokemons = List.from(_originalPokemons);
+
+    if (_searchQuery.isNotEmpty) {
+      filteredPokemons = filteredPokemons.where((pokemon) {
+        return pokemon.name.toLowerCase().contains(_searchQuery.toLowerCase());
+      }).toList();
     }
 
+    if (_currentOrderOption != null) {
+      final isAscending = _currentOrderOption!.order == 'asc';
+      if (_currentOrderOption!.orderBy == 'number') {
+        filteredPokemons.sort((a, b) => _compare(a.number, b.number, isAscending));
+      } else {
+        filteredPokemons.sort((a, b) => _compare(a.name, b.name, isAscending));
+      }
+    }
+
+    _pokemons = filteredPokemons;
     notifyListeners();
   }
 

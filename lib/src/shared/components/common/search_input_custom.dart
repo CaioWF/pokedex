@@ -5,7 +5,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex/src/shared/theme/colors.dart';
 
 class SearchInputCustom extends StatefulWidget {
-  const SearchInputCustom({super.key});
+  final Function(String query) onSearch;
+  final VoidCallback? onLoadingStart;
+  final VoidCallback? onLoadingEnd;
+
+  const SearchInputCustom({
+    super.key,
+    required this.onSearch,
+    this.onLoadingStart,
+    this.onLoadingEnd,
+  });
 
   @override
   State<SearchInputCustom> createState() => _SearchInputCustomState();
@@ -17,8 +26,16 @@ class _SearchInputCustomState extends State<SearchInputCustom> {
   void _onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
+    if (widget.onLoadingStart != null) {
+      widget.onLoadingStart!();
+    }
+
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      print('Calling: $query');
+      widget.onSearch(query);
+
+      if (widget.onLoadingEnd != null) {
+        widget.onLoadingEnd!();
+      }
     });
   }
 
@@ -38,26 +55,25 @@ class _SearchInputCustomState extends State<SearchInputCustom> {
       ),
       child: Row(
         children: [
-          SvgPicture.asset(
-            'assets/icons/search.svg',
-            width: 20,
-            height: 20,
-            colorFilter: const ColorFilter.mode(AppColors.textGrey, BlendMode.srcIn)
-          ),
+          SvgPicture.asset('assets/icons/search.svg',
+              width: 20,
+              height: 20,
+              colorFilter:
+                  const ColorFilter.mode(AppColors.textGrey, BlendMode.srcIn)),
           const SizedBox(width: 10),
           Expanded(
             child: TextField(
               onChanged: _onSearchChanged,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: AppColors.textBlack,
-              ),
+                    color: AppColors.textBlack,
+                  ),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: AppLocalizations.of(context)!.inputSearch,
                 hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppColors.textGrey,
-                  height: 1.19,
-                ),
+                      color: AppColors.textGrey,
+                      height: 1.19,
+                    ),
               ),
             ),
           ),

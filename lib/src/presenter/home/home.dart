@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex/src/core/config/pokemon_generation_config.dart';
+import 'package:pokedex/src/domain/entities/pokemon_list_entity.dart';
 import 'package:pokedex/src/presenter/home/home_controller.dart';
 import 'package:pokedex/src/presenter/home/widgets/filter_list.dart';
 import 'package:pokedex/src/presenter/home/widgets/generation_grid.dart';
@@ -123,9 +124,12 @@ class _HomeState extends State<Home> {
                             : const EdgeInsets.only(top: 10);
                           final pokemon = controller.pokemons[index];
 
-                          return Container(
-                            margin: margin,
-                            child: PokemonListItem(pokemon: pokemon),
+                          return GestureDetector(
+                            onTap: () => _onPokemonSelected(pokemon),
+                            child: Container(
+                              margin: margin,
+                              child: PokemonListItem(pokemon: pokemon),
+                            ),
                           );
                         },
                       ),
@@ -255,5 +259,9 @@ class _HomeState extends State<Home> {
       controller.applyFiltersTypesAndWeaknesses(selectedTypes, selectedWeaknesses);
       controller.setLoading(false);
     });
+  }
+
+  void _onPokemonSelected(PokemonListEntity pokemon) {
+    print('Pokemon selecionado: ${pokemon.number}');
   }
 }

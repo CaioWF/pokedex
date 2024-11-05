@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/src/core/config/pokemon_types.dart';
 import 'package:pokedex/src/core/errors/failure.dart';
 import 'package:pokedex/src/domain/entities/pokemon_list_entity.dart';
 import 'package:pokedex/src/domain/usecases/fetch_pokemon_list_usecase.dart';
@@ -114,13 +115,16 @@ class HomeController extends ChangeNotifier {
       }).toList();
     }
 
-    // if (_selectedWeaknesses.isNotEmpty) {
-    //   filteredPokemons = filteredPokemons.where((pokemon) {
-    //     return _selectedWeaknesses.every((weakness) {
-    //       return pokemon.weaknesses.contains(weakness);
-    //     });
-    //   }).toList();
-    // }
+    if (_selectedWeaknesses.isNotEmpty) {
+      filteredPokemons = filteredPokemons.where((pokemon) {
+        return _selectedWeaknesses.any((weakness) {
+          return pokemon.types.any((type) {
+            final weaknesses = PokemonTypes.typeWeaknesses[type.toLowerCase()] ?? [];
+            return weaknesses.contains(weakness.toLowerCase());
+          });
+        });
+      }).toList();
+    }
 
     _pokemons = filteredPokemons;
     notifyListeners();

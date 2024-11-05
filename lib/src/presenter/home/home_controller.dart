@@ -16,6 +16,8 @@ class HomeController extends ChangeNotifier {
 
   String _searchQuery = '';
   OrderOption? _currentOrderOption;
+  Set<String> _selectedTypes = {};
+  Set<String> _selectedWeaknesses = {};
 
   bool get isLoading => _isLoading;
   List<PokemonListEntity> get pokemons => _pokemons;
@@ -71,6 +73,21 @@ class HomeController extends ChangeNotifier {
     _applyFilters();
   }
 
+  void resetFiltersTypesAndWeaknesses() {
+    _selectedTypes = {};
+    _selectedWeaknesses = {};
+    _applyFilters();
+  }
+
+  void applyFiltersTypesAndWeaknesses(
+    Set<String> selectedTypes,
+    Set<String> selectedWeaknesses
+  ) {
+    _selectedTypes = selectedTypes;
+    _selectedWeaknesses = selectedWeaknesses;
+    _applyFilters();
+  }
+
   void _applyFilters() {
     List<PokemonListEntity> filteredPokemons = List.from(_originalPokemons);
 
@@ -88,6 +105,22 @@ class HomeController extends ChangeNotifier {
         filteredPokemons.sort((a, b) => _compare(a.name, b.name, isAscending));
       }
     }
+
+    if (_selectedTypes.isNotEmpty) {
+      filteredPokemons = filteredPokemons.where((pokemon) {
+        return _selectedTypes.any((type) {
+          return pokemon.types.map((pType) => pType.toLowerCase()).contains(type.toLowerCase());
+        });
+      }).toList();
+    }
+
+    // if (_selectedWeaknesses.isNotEmpty) {
+    //   filteredPokemons = filteredPokemons.where((pokemon) {
+    //     return _selectedWeaknesses.every((weakness) {
+    //       return pokemon.weaknesses.contains(weakness);
+    //     });
+    //   }).toList();
+    // }
 
     _pokemons = filteredPokemons;
     notifyListeners();

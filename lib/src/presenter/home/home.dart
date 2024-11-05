@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex/src/core/config/pokemon_generation_config.dart';
 import 'package:pokedex/src/presenter/home/home_controller.dart';
+import 'package:pokedex/src/presenter/home/widgets/filter_list.dart';
 import 'package:pokedex/src/presenter/home/widgets/generation_grid.dart';
 import 'package:pokedex/src/presenter/home/widgets/order_select_list.dart';
 import 'package:pokedex/src/presenter/home/widgets/pokemon_list_item.dart';
@@ -24,6 +27,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String selectedGeneration = 'firstGeneration';
   OrderOption selectedOrder = orderOptions.first;
+  Set<String> selectedTypes = {};
+  Set<String> selectedWeaknesses = {};
 
   final List<String> generations = PokemonGenerations.generations.keys.toList();
 
@@ -46,20 +51,21 @@ class _HomeState extends State<Home> {
       body: Stack(
         children: [
           Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: ShaderMask(
-                shaderCallback: (Rect bounds) {
-                  return AppGradients.pokeballGradient.createShader(bounds);
-                },
-                blendMode: BlendMode.srcIn,
-                child: SvgPicture.asset(
-                  'assets/images/half-pokeball.svg',
-                  semanticsLabel: 'Pokeball background',
-                  width: MediaQuery.of(context).size.width,
-                ),
-              )),
+            top: 0,
+            left: 0,
+            right: 0,
+            child: ShaderMask(
+              shaderCallback: (Rect bounds) {
+                return AppGradients.pokeballGradient.createShader(bounds);
+              },
+              blendMode: BlendMode.srcIn,
+              child: SvgPicture.asset(
+                'assets/images/half-pokeball.svg',
+                semanticsLabel: 'Pokeball background',
+                width: MediaQuery.of(context).size.width,
+              ),
+            )
+          ),
           Padding(
             padding: const EdgeInsets.all(40.0),
             child: Column(
@@ -68,7 +74,7 @@ class _HomeState extends State<Home> {
                 Menu(
                   onGenerationSelected: () => _showGenerationPicker(context),
                   onOrderSelected: () => _showSortSelector(context, controller),
-                  onFilterSelected: () => print('Filter selected'),
+                  onFilterSelected: () => _showFilterSelector(context, controller),
                 ),
                 const SizedBox(height: 35),
                 Text(
@@ -174,11 +180,37 @@ class _HomeState extends State<Home> {
               onItemSelected: (OrderOption orderOption) {
                 setState(() {
                   selectedOrder = orderOption;
-                _filterPokemonOnOrderChange(controller);
+                  _filterPokemonOnOrderChange(controller);
                 });
               },
               orderOptions: orderOptions,
               scrollController: scrollController,
+            );
+          },
+          maxChildSize: 0.55,
+        );
+      },
+    );
+  }
+
+  void _showFilterSelector(BuildContext context, HomeController controller) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return DraggableBottomSheet(
+          title: AppLocalizations.of(context)!.filterTitle,
+          description: AppLocalizations.of(context)!.filterDescription,
+          content: (scrollController) {
+            return FilterList(
+              selectedTypes: selectedTypes,
+              selectedWeaknesses: selectedWeaknesses,
+              onResetFilters: () {
+                _onResetFilters(controller);
+              },
+              onApplyFilters: (selectedTypes, selectedWeaknesses) {
+                _onApplyFilters(controller, selectedTypes, selectedWeaknesses);
+              },
             );
           },
           maxChildSize: 0.55,
@@ -200,5 +232,29 @@ class _HomeState extends State<Home> {
   void _onSearch(String query) {
     final homeController = Provider.of<HomeController>(context, listen: false);
     homeController.searchPokemon(query);
+  }
+
+  void _onResetFilters(HomeController controller) {
+    controller.setLoading(true);
+    setState(() {
+      selectedTypes.clear();
+      selectedWeaknesses.clear();
+    });
+    Timer(const Duration(milliseconds: 300), () {
+      controller.resetFiltersTypesAndWeaknesses();
+      controller.setLoading(false);
+    });
+  }
+
+  void _onApplyFilters(HomeController controller, Set<String> selectedTypesFilters, Set<String> selectedWeaknessesFilters) {
+    controller.setLoading(true);
+    setState(() {
+      selectedTypes = selectedTypesFilters;
+      selectedWeaknesses = selectedWeaknessesFilters;
+    });
+    Timer(const Duration(milliseconds: 300), () {
+      controller.applyFiltersTypesAndWeaknesses(selectedTypes, selectedWeaknesses);
+      controller.setLoading(false);
+    });
   }
 }

@@ -15,5 +15,11 @@
   },
   "orderFilterTitle": "Ordenar",
   "orderFilterDescription": "Ordene os Pokémons em ordem alfabética ou pelo número da Pokédex Nacional!",
-  "order": "{order, select, number_asc{Números menores primeiro} number_desc{Números maiores primeiro} name_asc{A-Z} other {Z-A}}"
+  "order": "{order, select, number_asc{Números menores primeiro} number_desc{Números maiores primeiro} name_asc{A-Z} other {Z-A}}",
+  "filterTitle": "Filtros",
+  "filterDescription": "Use a pesquisa avançada para explorar Pokémon por tipo e fraquezas!",
+  "typeFilterTitle": "Tipos",
+  "weaknessesFilterTitle": "Fraquezas",
+  "clearFilters": "Resetar",
+  "applyFilters": "Aplicar"
 }

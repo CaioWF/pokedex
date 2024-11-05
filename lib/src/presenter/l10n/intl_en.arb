@@ -15,5 +15,11 @@
   },
   "orderFilterTitle": "Sort",
   "orderFilterDescription": "Sort Pokémons alphabetically or by National Pokédex number!",
-  "order": "{order, select, number_asc{Smallest number first} number_desc{Highest number first} name_asc{A-Z} other {Z-A}}"
+  "order": "{order, select, number_asc{Smallest number first} number_desc{Highest number first} name_asc{A-Z} other {Z-A}}",
+  "filterTitle": "Filters",
+  "filterDescription": "Use advanced search to explore Pokémon by type and weaknesses!",
+  "typeFilterTitle": "Types",
+  "weaknessesFilterTitle": "Weaknesses",
+  "clearFilters": "Reset",
+  "applyFilters": "Apply"
 }

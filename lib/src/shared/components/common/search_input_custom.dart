@@ -30,7 +30,7 @@ class _SearchInputCustomState extends State<SearchInputCustom> {
       widget.onLoadingStart!();
     }
 
-    _debounce = Timer(const Duration(milliseconds: 500), () {
+    _debounce = Timer(const Duration(milliseconds: 300), () {
       widget.onSearch(query);
 
       if (widget.onLoadingEnd != null) {

@@ -135,4 +135,8 @@ class HomeController extends ChangeNotifier {
   int _compare<T extends Comparable>(T a, T b, bool isAscending) {
     return isAscending ? a.compareTo(b) : b.compareTo(a);
   }
+
+  void navigateToDetail(PokemonListEntity pokemon) {
+    _navigationService.navigateTo('/detail', arguments: pokemon);
+  }
 }

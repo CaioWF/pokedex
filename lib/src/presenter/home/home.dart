@@ -262,6 +262,7 @@ class _HomeState extends State<Home> {
   }
 
   void _onPokemonSelected(PokemonListEntity pokemon) {
-    print('Pokemon selecionado: ${pokemon.number}');
+    final homeController = Provider.of<HomeController>(context, listen: false);
+    homeController.navigateToDetail(pokemon);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/src/core/config/app_config.dart';
+import 'package:pokedex/src/core/config/app_routes.dart';
 import 'package:pokedex/src/core/network/dio_setup.dart';
 import 'package:pokedex/src/core/services/navigation_service.dart';
 import 'package:pokedex/src/domain/usecases/fetch_pokemon_list_usecase.dart';
@@ -48,6 +49,7 @@ class App extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,
       debugShowCheckedModeBanner: false,
+      onGenerateRoute: AppRoutes.generateRoute,
       home: const Home(),
     );
   }

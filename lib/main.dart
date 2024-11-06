@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/src/core/config/app_config.dart';
 import 'package:pokedex/src/core/network/dio_setup.dart';
+import 'package:pokedex/src/core/services/navigation_service.dart';
 import 'package:pokedex/src/domain/usecases/fetch_pokemon_list_usecase.dart';
 import 'package:pokedex/src/presenter/home/home_controller.dart';
 import 'package:provider/provider.dart';
@@ -12,32 +13,37 @@ import 'package:pokedex/src/shared/theme/theme.dart';
 void main() {
   // setup
   final dio = setupDio();
-  
-  //repositories
+  final navigationService = NavigationService();
+
+  // repositories
   final pokemonRepository = PokemonRepositoryImpl(apiBaseUrl: AppConfig.apiBaseUrl, dio: dio);
-  
-  //usecases
+
+  // usecases
   final fetchPokemonListUsecase = FetchPokemonListUsecase(pokemonRepository);
 
   runApp(
     MultiProvider(
       providers: [
+        Provider<NavigationService>.value(value: navigationService),
         ChangeNotifierProvider(
-          create: (_) => HomeController(fetchPokemonListUsecase),
+          create: (_) => HomeController(fetchPokemonListUsecase, navigationService),
         ),
       ],
-      child: const App(),
+      child: App(navigationService: navigationService),
     ),
   );
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final NavigationService navigationService;
+
+  const App({super.key, required this.navigationService});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pokedex',
+      navigatorKey: navigationService.navigatorKey,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: appTheme,

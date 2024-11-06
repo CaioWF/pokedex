@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/src/core/config/pokemon_types.dart';
 import 'package:pokedex/src/core/errors/failure.dart';
+import 'package:pokedex/src/core/services/navigation_service.dart';
 import 'package:pokedex/src/domain/entities/pokemon_list_entity.dart';
 import 'package:pokedex/src/domain/usecases/fetch_pokemon_list_usecase.dart';
 import 'package:pokedex/src/shared/utils/order_options.dart';
 
 class HomeController extends ChangeNotifier {
   final FetchPokemonListUsecase _fetchPokemonListUseCase;
+  final NavigationService _navigationService;
 
-  HomeController(this._fetchPokemonListUseCase);
+  HomeController(this._fetchPokemonListUseCase, this._navigationService);
 
   bool _isLoading = false;
   List<PokemonListEntity> _pokemons = [];
